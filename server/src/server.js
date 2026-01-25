@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import connectionDB from "./config/connectionDB.js";
 import authRoute from "./routes/authRoute.js";
 import userRoute from "./routes/userRoute.js";
+import categoryRoute from "./routes/categoryRoute.js";
 import examRoute from "./routes/examRoute.js";
 import { protectedUser } from "./middlewares/authMiddleware.js";
 
@@ -25,6 +26,7 @@ app.use("/api/auth", authRoute);
 // private route
 app.use(protectedUser);
 app.use("/api/users", userRoute);
+app.use("/api/category", categoryRoute);
 app.use("/api/exams", examRoute);
 
 connectionDB().then(() => {

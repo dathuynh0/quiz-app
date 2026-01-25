@@ -2,7 +2,7 @@ import Exam from "../models/Exam.js";
 
 export const getExam = async (req, res) => {
   try {
-    const exam = await Exam.find();
+    const exam = await Exam.find().populate("categoryId");
 
     return res.status(200).json({ exam });
   } catch (error) {
@@ -11,16 +11,17 @@ export const getExam = async (req, res) => {
   }
 };
 
-export const addExam = async (req, res) => {
+export const createExam = async (req, res) => {
   try {
     const user = req.user;
-    const { questions, title, avatarUrl, timeLimit, score } = req.body;
-    if (!questions || !title || !timeLimit) {
+    const { questions, title, avatarUrl, timeLimit, score, categoryId } =
+      req.body;
+    if (!questions || !title || !timeLimit || !categoryId) {
       return res.status(400).json({ message: "Điền đầy đủ thông tin" });
     }
 
-    const existExam = await Exam.findOne({ title });
-    if (existExam) {
+    const existingExam = await Exam.findOne({ title });
+    if (existingExam) {
       return res.status(400).json({ message: "Kỳ thi đã tồn tại" });
     }
 
@@ -31,6 +32,7 @@ export const addExam = async (req, res) => {
       avatarUrl,
       timeLimit,
       score,
+      categoryId,
     });
 
     return res.sendStatus(204);

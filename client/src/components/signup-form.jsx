@@ -57,7 +57,7 @@ export function SignupForm({ className, ...props }) {
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Đăng Ký Tài Khoản</CardTitle>
+          <CardTitle className="text-xl">Đăng ký</CardTitle>
           <CardDescription>
             Hãy điền đầy đủ thông tin và trải nghiệm
           </CardDescription>
@@ -118,7 +118,9 @@ export function SignupForm({ className, ...props }) {
                 </Field>
               </Field>
               <Field>
-                <Button type="submit">Đăng ký</Button>
+                <Button type="submit" variant="blue">
+                  Đăng ký
+                </Button>
                 <FieldDescription className="text-center">
                   Bạn đã có tài khoản? <a href="/signin">Đăng nhập</a>
                 </FieldDescription>

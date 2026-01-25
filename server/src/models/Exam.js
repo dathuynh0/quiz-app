@@ -20,11 +20,11 @@ const examSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  questions: [questionSchema],
   title: {
     type: String,
     required: true,
   },
+  questions: [questionSchema],
   avatarUrl: {
     type: String,
     default: "",
@@ -37,6 +37,10 @@ const examSchema = new mongoose.Schema({
     type: Number,
     required: true,
     default: 0,
+  },
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
   },
 });
 

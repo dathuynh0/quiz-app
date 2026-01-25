@@ -1,5 +1,5 @@
 import express from "express";
-import { addExam, getExam } from "../controllers/examController.js";
+import { createExam, getExam } from "../controllers/examController.js";
 
 const router = express.Router();
 
@@ -7,6 +7,6 @@ const router = express.Router();
 router.get("/get", getExam);
 
 // them khoa hoc
-router.post("/add", addExam);
+router.post("/add", createExam);
 
 export default router;

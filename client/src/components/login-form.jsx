@@ -90,9 +90,11 @@ export function LoginForm({ className, ...props }) {
                 />
               </Field>
               <Field>
-                <Button type="submit">Đăng nhập</Button>
+                <Button type="submit" variant="blue">
+                  Đăng nhập
+                </Button>
                 <FieldDescription className="text-center">
-                  Bạn chưa có tài khoản? <a href="/signup">Đăngg ký</a>
+                  Bạn chưa có tài khoản? <a href="/signup">Đăng ký</a>
                 </FieldDescription>
               </Field>
             </FieldGroup>

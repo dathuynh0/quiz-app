@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useAuthStore } from "../stores/useAuthStore.js";
+import { authService } from "../services/authService.js";
 
 const api = axios.create({
   baseURL: "http://localhost:8080/api",
@@ -37,6 +38,7 @@ api.interceptors.response.use(
 
         return api(originalReq);
       } catch (refreshError) {
+        await authService.getState().signOut();
         return Promise.reject(refreshError);
       }
     }
