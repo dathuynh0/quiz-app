@@ -33,11 +33,6 @@ const examSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  score: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",

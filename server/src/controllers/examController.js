@@ -2,11 +2,28 @@ import Exam from "../models/Exam.js";
 
 export const getExam = async (req, res) => {
   try {
-    const exam = await Exam.find().populate("categoryId");
+    const exam = await Exam.find()
+      .populate("categoryId")
+      .populate("userId", "displayName");
 
-    return res.status(200).json({ exam });
+    return res.status(200).json(exam);
   } catch (error) {
     console.error("Lỗi khi gọi hàm addExam: ", error);
+    return res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
+export const getExamById = async (req, res) => {
+  try {
+    const exam = await Exam.findById(req.params.id).populate("categoryId");
+
+    if (!exam) {
+      return res.status(404).json({ message: "Id không đúng" });
+    }
+
+    return res.status(200).json(exam);
+  } catch (error) {
+    console.error("Lỗi khi gọi hàm getExamById: ", error);
     return res.status(500).json({ message: "Lỗi server" });
   }
 };
@@ -14,8 +31,7 @@ export const getExam = async (req, res) => {
 export const createExam = async (req, res) => {
   try {
     const user = req.user;
-    const { questions, title, avatarUrl, timeLimit, score, categoryId } =
-      req.body;
+    const { questions, title, avatarUrl, timeLimit, categoryId } = req.body;
     if (!questions || !title || !timeLimit || !categoryId) {
       return res.status(400).json({ message: "Điền đầy đủ thông tin" });
     }
@@ -31,7 +47,6 @@ export const createExam = async (req, res) => {
       title,
       avatarUrl,
       timeLimit,
-      score,
       categoryId,
     });
 

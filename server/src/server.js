@@ -7,6 +7,7 @@ import authRoute from "./routes/authRoute.js";
 import userRoute from "./routes/userRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import examRoute from "./routes/examRoute.js";
+import historyExam from "./routes/historyExamRoute.js";
 import { protectedUser } from "./middlewares/authMiddleware.js";
 
 dotenv.config();
@@ -28,6 +29,7 @@ app.use(protectedUser);
 app.use("/api/users", userRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/exams", examRoute);
+app.use("/api/history-exam", historyExam);
 
 connectionDB().then(() => {
   app.listen(PORT, () => {

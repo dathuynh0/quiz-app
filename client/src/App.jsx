@@ -8,6 +8,7 @@ import Home from "./components/SideBar/Home";
 import Exam from "./components/SideBar/Exam";
 import History from "./components/SideBar/History";
 import UserInfo from "./components/SideBar/UserInfo";
+import QuizQuestions from "./pages/QuizQuestions";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
 
           {/* protected route */}
           <Route element={<ProtectedPage />}>
+            <Route path="/test/:id" element={<QuizQuestions />} />
             <Route path="/" element={<HomePage />}>
               <Route index element={<Home />} />
               <Route path="/exam" element={<Exam />} />

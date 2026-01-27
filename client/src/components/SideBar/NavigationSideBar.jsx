@@ -1,10 +1,12 @@
-import { Link } from "react-router";
-import { BookOpenCheck, House, History, User } from "lucide-react";
+import { NavLink, Link } from "react-router";
+import { BookOpenCheck, House, History, User, LogOutIcon } from "lucide-react";
 import logo from "../../assets/logo-quiz-app.jpg";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { useAuthStore } from "../../stores/useAuthStore";
 
 const NavigationSideBar = () => {
+  const { signOut } = useAuthStore();
+
   const data = [
     {
       link: "/",
@@ -28,41 +30,42 @@ const NavigationSideBar = () => {
     },
   ];
 
-  const [active, setActive] = useState(0);
-
   return (
-    <div className="w-full">
+    <div className="w-full h-full flex flex-col z-50">
       {/* logo */}
       <div className="py-2 px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="Logo" className="size-12 rounded-xl" />
-          <h2 className="text-black text-xl font-medium">Quiz</h2>
+          <h2 className="text-black text-xl font-medium">Quiz App</h2>
         </Link>
       </div>
 
       <hr className="mt-4" />
 
-      {/* navigation */}
-      <div className="mt-8 px-2">
-        {data.map((data, index) => {
-          return (
-            <Link
+      <div className="mt-8 px-2 flex flex-col h-full justify-between">
+        <div>
+          {data.map((item, index) => (
+            <NavLink
               key={index}
-              to={data.link}
+              to={item.link}
               className={
-                active === index
-                  ? "flex items-center bg-blue-50 text-blue-600 p-2 mt-2 rounded-lg"
-                  : "flex items-center hover:bg-blue-50 p-2 mt-2 rounded-lg"
+                "flex items-center hover:bg-blue-50 p-2 mt-2 rounded-lg"
               }
-              onClick={() => {
-                setActive(index);
-              }}
             >
-              {data.icon}
-              <p className="pl-4">{data.name}</p>
-            </Link>
-          );
-        })}
+              {item.icon}
+              <p className="pl-4">{item.name}</p>
+            </NavLink>
+          ))}
+        </div>
+        {/* signout */}
+        <Button
+          onClick={signOut}
+          variant="ghost"
+          className="w-full bg-gray-300 mt-4"
+        >
+          <LogOutIcon />
+          Đăng xuất
+        </Button>
       </div>
     </div>
   );
