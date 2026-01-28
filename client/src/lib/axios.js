@@ -22,7 +22,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
-    const originalReq = error.config;
+    const originalRequest = error.config;
     const { setAccessToken } = useAuthStore.getState();
     if (error.response.status === 401) {
       try {
@@ -33,10 +33,10 @@ api.interceptors.response.use(
         setAccessToken(accessToken);
 
         if (accessToken) {
-          originalReq.headers.Authorization = `Bearer ${accessToken}`;
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         }
 
-        return api(originalReq);
+        return api(originalRequest);
       } catch (refreshError) {
         await authService.getState().signOut();
         return Promise.reject(refreshError);

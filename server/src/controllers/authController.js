@@ -146,3 +146,38 @@ export const refresh = async (req, res) => {
     return res.status(500).json({ message: "Lỗi server" });
   }
 };
+
+export const createUser = async (req, res) => {
+  try {
+    const { username, password, displayName, position } = req.body;
+    if (!username || !password || !displayName || !position) {
+      return res.status(400).json({
+        message:
+          "username, password, displayName, position không được bỏ trống",
+      });
+    }
+
+    // kiểm tra username có trong db chưa
+    const exist = await User.findOne({ username });
+    if (exist) {
+      return res
+        .status(400)
+        .json({ message: "User đã tồn tại không thể thêm" });
+    }
+
+    // hashedPassword
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await User.create({
+      username,
+      password: hashedPassword,
+      displayName,
+      position,
+    });
+
+    return res.sendStatus(204);
+  } catch (error) {
+    console.error("Lỗi khi gọi hàm creteUser: ", error);
+    return res.status(500).json({ message: "Lỗi server" });
+  }
+};

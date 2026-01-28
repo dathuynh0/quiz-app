@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { useNavigate, useParams } from "react-router";
 import { GraduationCap, ArrowLeft, ArrowRight } from "lucide-react";
 import api from "@/lib/axios";
-import CountDownTimer from "../components/CountDownTimer";
+import CountDownTimer from "../components/Exam/CountDownTimer";
 import { Button } from "@/components/ui/button";
 
 const QuizQuestions = () => {
@@ -62,6 +62,7 @@ const QuizQuestions = () => {
       const newScore = Math.round((correct / quiz.questions.length) * 100) / 10;
 
       setScore(newScore);
+      setAnswers({});
 
       alert(`Điểm của bạn: ${newScore}`);
       await createHistoryExam(id, newScore);
@@ -125,8 +126,8 @@ const QuizQuestions = () => {
 
               <div className="mt-4 flex items-center justify-between">
                 <Button
-                  variant="blue"
-                  className="cursor-pointer"
+                  variant="ghost"
+                  className="bg-white border text-black cursor-pointer"
                   disabled={indexQuestion < 1}
                   onClick={() => {
                     setIndexQuestion((p) => p - 1);

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { examService } from "../services/examService";
+import { toast } from "sonner";
 
 export const useExamStore = create((set, get) => ({
   exams: [],
@@ -12,6 +13,18 @@ export const useExamStore = create((set, get) => ({
       set({ exams });
     } catch (error) {
       console.error(error);
+    }
+  },
+
+  createExam: async (exam) => {
+    try {
+      const e = await examService.createExam(exam);
+      set({ ...exam, e });
+
+      toast.success("Tạo kỳ thi thành công");
+    } catch (error) {
+      console.error(error);
+      toast.error("Tạo kỳ thi thất bại");
     }
   },
 

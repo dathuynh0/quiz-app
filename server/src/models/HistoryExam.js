@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const historyExamSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     examId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Exam",

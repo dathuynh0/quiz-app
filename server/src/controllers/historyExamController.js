@@ -2,7 +2,8 @@ import HistoryExam from "../models/HistoryExam.js";
 
 export const getAllHistoryExam = async (req, res) => {
   try {
-    const history = await HistoryExam.find()
+    const user = req.user;
+    const history = await HistoryExam.find({ userId: user._id })
       .sort({ createdAt: -1 })
       .populate("examId");
 
@@ -15,12 +16,14 @@ export const getAllHistoryExam = async (req, res) => {
 
 export const createHistoryExam = async (req, res) => {
   try {
+    const user = req.user;
     const { score, examId } = req.body;
     if (!examId) {
       return res.status(400).json("examId trống");
     }
 
     await HistoryExam.create({
+      userId: user._id,
       examId,
       score,
     });

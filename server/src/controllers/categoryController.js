@@ -6,7 +6,7 @@ export const getAllCategory = async (req, res) => {
       createdAt: -1,
     });
 
-    return res.status(200).json({ category });
+    return res.status(200).json(category);
   } catch (error) {
     console.error("Lỗi khi gọi hàm getAllCategory: ", error);
     return res.status(500).json({ message: "Lỗi server" });

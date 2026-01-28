@@ -4,7 +4,7 @@ const HistoryExamCard = ({ historyExam }) => {
   const time = Math.floor(historyExam.examId.timeLimit / 60);
 
   return (
-    <div className="mt-4 group w-72 flex flex-col overflow-hidden rounded-lg bg-white shadow-lg">
+    <div className="mt-4 group w-72 flex flex-col overflow-hidden rounded-lg bg-white shadow-lg transition-transform duration-200 ease-in-out hover:-translate-y-0.5">
       <img
         className="w-full h-[1/3] object-cover"
         src={
