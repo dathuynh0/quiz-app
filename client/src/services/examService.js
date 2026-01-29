@@ -13,6 +13,10 @@ export const examService = {
     return res.data;
   },
 
+  deleteExam: async (id) => {
+    await api.delete(`/exams/${id}`, { withCredentials: true });
+  },
+
   getHistoryExam: async () => {
     const res = await api.get("/history-exam", { withCredentials: true });
 

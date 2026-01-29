@@ -13,7 +13,13 @@ const Exam = () => {
     fetchExam();
   }, [getAllExam]);
 
-  console.log(exams);
+  if (exams.length === 0) {
+    return (
+      <div className="h-full w-full flex items-center justify-center">
+        <p>Chưa có bất kì kỳ thi nào</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full">
@@ -21,8 +27,8 @@ const Exam = () => {
       {/* danh mục */}
       <div></div>
       <div className="grid lg:grid-cols-4">
-        {exams.map((exam, index) => (
-          <ExamCard exam={exam} key={index} />
+        {exams.map((exam) => (
+          <ExamCard exam={exam} key={exam._id} />
         ))}
       </div>
     </div>

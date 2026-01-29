@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useExamStore } from "@/stores/useExamStore";
 import { Button } from "@/components/ui/button";
-import { Pen, Plus } from "lucide-react";
+import { History, Pen, Plus } from "lucide-react";
 import LineChart from "../Exam/LineChart";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
@@ -45,7 +45,16 @@ const UserInfo = () => {
               <Button variant="blue" className="cursor-pointer">
                 <Link
                   className="flex items-center gap-1"
-                  to="/exams/create-exam"
+                  to="/exam/created-exam"
+                >
+                  <History />
+                  Các bài thi đã tạo
+                </Link>
+              </Button>
+              <Button variant="blue" className="cursor-pointer">
+                <Link
+                  className="flex items-center gap-1"
+                  to="/exam/create-exam"
                 >
                   <Plus />
                   Tạo bài thi

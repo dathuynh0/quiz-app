@@ -10,6 +10,7 @@ import History from "./components/SideBar/History";
 import UserInfo from "./components/SideBar/UserInfo";
 import QuizQuestions from "./pages/QuizQuestions";
 import CreateExam from "./components/Exam/CreateExam";
+import CreatedExam from "./components/Exam/CreatedExam";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
             <Route path="/" element={<HomePage />}>
               <Route index element={<Home />} />
               <Route path="/exam" element={<Exam />} />
-              <Route path="/exams/create-exam" element={<CreateExam />} />
+              <Route path="/exam/create-exam" element={<CreateExam />} />
+              <Route path="/exam/created-exam" element={<CreatedExam />} />
               <Route path="/history" element={<History />} />
               <Route path="/user" element={<UserInfo />} />
             </Route>

@@ -28,6 +28,18 @@ export const useExamStore = create((set, get) => ({
     }
   },
 
+  deleteExam: async (id) => {
+    try {
+      await examService.deleteExam(id);
+
+      get().getAllExam();
+      toast.success("Xóa thành công");
+    } catch (error) {
+      console.error(error);
+      toast.error("Xóa thất bại");
+    }
+  },
+
   getHistoryExam: async () => {
     try {
       const history = await examService.getHistoryExam();
