@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  createUser,
   refresh,
   signIn,
   signOut,
@@ -11,9 +10,6 @@ const router = express.Router();
 
 // signup
 router.post("/signup", signUp);
-
-//create
-router.post("/add", createUser);
 
 // signin
 router.post("/signin", signIn);

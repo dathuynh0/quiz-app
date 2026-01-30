@@ -8,7 +8,8 @@ import userRoute from "./routes/userRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import examRoute from "./routes/examRoute.js";
 import historyExam from "./routes/historyExamRoute.js";
-import { protectedUser } from "./middlewares/authMiddleware.js";
+import adminRoute from "./routes/adminRoute.js";
+import { isAdmin, protectedUser } from "./middlewares/authMiddleware.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/api/auth", authRoute);
 
 // private route
 app.use(protectedUser);
+app.use("/api/admin", isAdmin, adminRoute);
 app.use("/api/users", userRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/exams", examRoute);

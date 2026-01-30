@@ -35,3 +35,20 @@ export const protectedUser = async (req, res, next) => {
     return res.status(500).json({ message: "Lỗi server" });
   }
 };
+
+export const isAdmin = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if (!user || user.position !== "Admin") {
+      return res
+        .status(400)
+        .json({ message: "Chưa đăng nhập hoặc không phải admin" });
+    }
+
+    // neu dung la Admin ok
+    next();
+  } catch (error) {
+    console.error("Lỗi khi gọi middleware isAdmin: ", error);
+    return res.status(500).json({ message: "Lỗi server" });
+  }
+};

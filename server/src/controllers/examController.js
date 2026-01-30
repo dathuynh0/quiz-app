@@ -57,6 +57,35 @@ export const createExam = async (req, res) => {
   }
 };
 
+export const updateExam = async (req, res) => {
+  try {
+    const { questions, title, avatarUrl, timeLimit, categoryId } = req.body;
+
+    const exam = await Exam.findByIdAndUpdate(
+      req.params.id,
+      {
+        questions,
+        title,
+        avatarUrl,
+        timeLimit,
+        categoryId,
+      },
+      {
+        new: true,
+      },
+    );
+
+    if (!exam) {
+      return res.status(400).json("Cập nhật thất bại");
+    }
+
+    return res.status(200).json(exam);
+  } catch (error) {
+    console.error("Lỗi khi gọi hàm updateExam: ", error);
+    return res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
 export const deleteExam = async (req, res) => {
   try {
     await Exam.findByIdAndDelete(req.params.id);

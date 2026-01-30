@@ -55,7 +55,7 @@ export const updateCategory = async (req, res) => {
       return res.status(404).json({ message: "Category không tồn tại" });
     }
 
-    return res.status(200).json({ newCategory });
+    return res.status(200).json(newCategory);
   } catch (error) {
     console.error("Lỗi khi gọi hàm updateCategory: ", error);
     return res.status(500).json({ message: "Lỗi server" });
@@ -69,7 +69,7 @@ export const deleteCategory = async (req, res) => {
       return res.status(404).json({ message: "Category không tồn tại" });
     }
 
-    return res.status(200).json({ deleteCategory });
+    return res.status(200).json(deleteCategory);
   } catch (error) {
     console.error("Lỗi khi gọi hàm deleteCategory: ", error);
     return res.status(500).json({ message: "Lỗi server" });
