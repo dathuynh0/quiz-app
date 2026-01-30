@@ -12,7 +12,7 @@ const HomePage = () => {
       </div>
 
       {/* main content */}
-      <div className="col-span-10 bg-slate-50">
+      <div className="col-span-10 bg-slate-50 w-full">
         <div className="bg-white px-4 py-2 flex items-center justify-end gap-2">
           <div>
             <p>{user.displayName}</p>
@@ -33,7 +33,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="flex-1 p-4">
+        <div className="p-4 w-full">
           <Outlet />
         </div>
       </div>

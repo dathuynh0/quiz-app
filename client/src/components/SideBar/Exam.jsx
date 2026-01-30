@@ -26,7 +26,7 @@ const Exam = () => {
       <h2 className="text-2xl font-semibold">Danh sách kỳ thi</h2>
       {/* danh mục */}
       <div></div>
-      <div className="grid lg:grid-cols-4">
+      <div className="grid lg:grid-cols-4 gap-2">
         {exams.map((exam) => (
           <ExamCard exam={exam} key={exam._id} />
         ))}

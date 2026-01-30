@@ -61,7 +61,7 @@ const NavigationSideBar = () => {
         <Button
           onClick={signOut}
           variant="ghost"
-          className="w-full bg-gray-300 mt-4"
+          className="w-full cursor-pointer bg-gray-300 mt-4"
         >
           <LogOutIcon />
           Đăng xuất

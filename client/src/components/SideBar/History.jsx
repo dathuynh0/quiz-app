@@ -13,8 +13,6 @@ const History = () => {
     fetchHistory();
   }, [getHistoryExam]);
 
-  console.log(historyExam);
-
   if (historyExam.length === 0) {
     return (
       <div className="w-full">
@@ -24,8 +22,9 @@ const History = () => {
       </div>
     );
   }
+
   return (
-    <div>
+    <div className="w-full">
       <h2 className="text-2xl font-medium">Lịch sử thi</h2>
       <div className="grid lg:grid-cols-4 gap-2">
         {historyExam.map((historyExam, index) => (

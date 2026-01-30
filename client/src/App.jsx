@@ -11,6 +11,11 @@ import UserInfo from "./components/SideBar/UserInfo";
 import QuizQuestions from "./pages/QuizQuestions";
 import CreateExam from "./components/Exam/CreateExam";
 import CreatedExam from "./components/Exam/CreatedExam";
+import Admin from "./pages/Admin";
+import DashBoard from "./components/Admin/DashBoard";
+import CategoryManager from "./components/Admin/CategoryManager";
+import ExamManager from "./components/Admin/ExamManager";
+import UserManager from "./components/Admin/UserManager";
 
 function App() {
   return (
@@ -23,7 +28,15 @@ function App() {
 
           {/* protected route */}
           <Route element={<ProtectedPage />}>
+            <Route element={<Admin />}>
+              <Route path="/admin/dashboard" element={<DashBoard />} />
+              <Route path="/admin/category" element={<CategoryManager />} />
+              <Route path="/admin/exam" element={<ExamManager />} />
+              <Route path="/admin/user" element={<UserManager />} />
+            </Route>
+
             <Route path="/test/:id" element={<QuizQuestions />} />
+
             <Route path="/" element={<HomePage />}>
               <Route index element={<Home />} />
               <Route path="/exam" element={<Exam />} />
