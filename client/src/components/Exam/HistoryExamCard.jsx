@@ -6,7 +6,7 @@ const HistoryExamCard = ({ historyExam }) => {
   return (
     <div className="mt-4 group w-72 flex flex-col overflow-hidden rounded-lg bg-white shadow-lg transition-transform duration-200 ease-in-out hover:-translate-y-0.5">
       <img
-        className="w-full h-[1/3] object-cover"
+        className="w-full h-50 object-cover"
         src={
           historyExam.examId.avatarUrl
             ? historyExam.examId.avatarUrl
@@ -15,7 +15,7 @@ const HistoryExamCard = ({ historyExam }) => {
         alt={historyExam.examId.title}
       />
 
-      <div className="p-3 mt-4">
+      <div className="p-3">
         <h2 className="leading-snug line-clamp-2 h-15 text-xl font-medium">
           {historyExam.examId.title}
         </h2>
@@ -29,11 +29,17 @@ const HistoryExamCard = ({ historyExam }) => {
             {historyExam.examId.questions.length} câu hỏi
           </p>
         </div>
-        <h2
-          className={`text-lg ${historyExam.score < 5 ? "text-red-500" : "text-green-400"}`}
-        >
-          Điểm đạt: <span className={`font-bold `}>{historyExam.score}</span>
-        </h2>
+        <div className="flex items-center justify-between">
+          <p
+            className={`text-lg ${historyExam.score < 5 ? "text-red-500" : "text-green-400"}`}
+          >
+            Điểm đạt: <span className={`font-bold `}>{historyExam.score}</span>
+          </p>
+          <span className="text-sm text-muted-foreground">
+            Ngày thi:{" "}
+            {new Date(historyExam.createdAt).toLocaleDateString("vi-VN")}
+          </span>
+        </div>
       </div>
     </div>
   );

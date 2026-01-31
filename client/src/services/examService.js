@@ -23,3 +23,11 @@ export const examService = {
     return res.data;
   },
 };
+
+export const examAdminService = {
+  getAllExamForAdmin: async () => {
+    const res = await api.get("/admin/exam", { withCredentials: true });
+
+    return res.data;
+  },
+};

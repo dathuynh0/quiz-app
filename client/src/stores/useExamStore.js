@@ -1,9 +1,10 @@
 import { create } from "zustand";
-import { examService } from "../services/examService";
+import { examAdminService, examService } from "../services/examService";
 import { toast } from "sonner";
 
 export const useExamStore = create((set, get) => ({
   exams: [],
+  examsForAdmin: [],
   historyExam: [],
 
   getAllExam: async () => {
@@ -46,6 +47,17 @@ export const useExamStore = create((set, get) => ({
       set({ historyExam: history });
     } catch (error) {
       console.error(error);
+    }
+  },
+
+  // ADMIN
+  getAllExamForAdmin: async () => {
+    try {
+      const exam = await examAdminService.getAllExamForAdmin();
+      set({ examsForAdmin: exam });
+    } catch (error) {
+      console.log(error);
+      toast.error("Lỗi khi fetchExam");
     }
   },
 }));

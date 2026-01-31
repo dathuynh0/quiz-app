@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useNavigate, useParams } from "react-router";
 import { GraduationCap, ArrowLeft, ArrowRight } from "lucide-react";
@@ -13,6 +13,7 @@ const QuizQuestions = () => {
   const [indexQuestion, setIndexQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [isEnd, setIsEnd] = useState(false);
 
   useEffect(() => {
     const fetchExam = async () => {
@@ -24,57 +25,89 @@ const QuizQuestions = () => {
     fetchExam();
   }, []);
 
-  const createHistoryExam = async (examId, score) => {
-    console.log(examId, score);
-
+  const createHistoryExam = useCallback(async (examId, scoreValue) => {
     try {
-      const res = await api.post(
+      await api.post(
         "/history-exam",
-        {
-          examId,
-          score,
-        },
+        { examId, score: scoreValue },
         { withCredentials: true },
       );
-
-      return res;
     } catch (error) {
-      console.log("Lỗi khi gọi hàm createHistoryExam: ", error);
-      toast.error("Thêm thất bại");
+      console.error("Lỗi khi lưu lịch sử:", error);
+      toast.error("Không thể lưu kết quả thi");
     }
-  };
+  }, []);
 
-  const handleSelectAnswer = (questionIndex, answer) => {
+  const handleSelectAnswer = useCallback((questionIndex, answer) => {
     setAnswers((prev) => ({
       ...prev,
       [questionIndex]: answer,
     }));
-  };
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const result = confirm("Bạn chắn nộp bài. Nếu nộp sẽ không thể làm lại.");
-    if (result) {
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+
+      if (
+        !window.confirm(
+          "Bạn chắc chắn muốn nộp bài? Nếu nộp sẽ không thể làm lại.",
+        )
+      ) {
+        return;
+      }
+
+      // tính điểm
       const correct = quiz.questions.filter(
         (question, index) => answers[index] === question.answer,
       ).length;
-
       const newScore = Math.round((correct / quiz.questions.length) * 100) / 10;
 
       setScore(newScore);
-      setAnswers({});
-
-      alert(`Điểm của bạn: ${newScore}`);
+      setIsEnd(true);
+      // lưu lịch sử
       await createHistoryExam(id, newScore);
-    }
+    },
+    [quiz, answers, id, createHistoryExam],
+  );
 
-    navigate("/exam");
-  };
+  const handlePrevQuestion = useCallback(() => {
+    setIndexQuestion((prev) => Math.max(0, prev - 1));
+  }, []);
+
+  const handleNextQuestion = useCallback(() => {
+    setIndexQuestion((prev) =>
+      Math.min(quiz?.questions.length - 1 || 0, prev + 1),
+    );
+  }, [quiz]);
+
+  if (isEnd) {
+    return (
+      <div className="min-h-screen min-w-screen flex items-center justify-center">
+        <div className="bg-white p-8 rounded-2xl shadow-xl text-center max-w-md">
+          <h2 className="text-3xl font-bold mb-4">Hoàn thành bài thi!</h2>
+          <p className="text-gray-600 mb-2">Điểm thi của bạn là:</p>
+          <div
+            className={`text-5xl font-bold mb-8 ${score < 5 ? "text-red-500" : "text-blue-500"}`}
+          >
+            {score}
+          </div>
+          <Button
+            onClick={() => navigate("/exam")}
+            variant="blue"
+            className="w-full cursor-pointer"
+          >
+            Về trang chủ
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen w-screen">
       {/* header */}
-      {quiz ? (
+      {quiz && (
         <div className="w-full bg-white shadow-lg p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <GraduationCap className="size-8" />
@@ -93,12 +126,10 @@ const QuizQuestions = () => {
             </Button>
           </div>
         </div>
-      ) : (
-        <p>Đang tải dữ liêu...</p>
       )}
 
       {/* main */}
-      {quiz ? (
+      {quiz && (
         <div className="flex items-center justify-center w-full min-h-screen">
           {/* phan chon cau hoi */}
           <div className="grid grid-cols-12 gap-6">
@@ -130,7 +161,7 @@ const QuizQuestions = () => {
                   className="bg-white border text-black cursor-pointer"
                   disabled={indexQuestion < 1}
                   onClick={() => {
-                    setIndexQuestion((p) => p - 1);
+                    handlePrevQuestion();
                   }}
                 >
                   <ArrowLeft />
@@ -141,7 +172,7 @@ const QuizQuestions = () => {
                   className="cursor-pointer"
                   disabled={indexQuestion === quiz.questions.length - 1}
                   onClick={() => {
-                    setIndexQuestion((p) => p + 1);
+                    handleNextQuestion();
                   }}
                 >
                   Câu tiếp theo
@@ -167,8 +198,6 @@ const QuizQuestions = () => {
             </div>
           </div>
         </div>
-      ) : (
-        <p>Đang tải dữ liêu...</p>
       )}
     </div>
   );

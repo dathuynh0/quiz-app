@@ -6,16 +6,17 @@ import { useExamStore } from "@/stores/useExamStore";
 import CreateExam from "./CreateExam";
 
 const ExamManager = () => {
-  const { exams, getAllExam, createExam, deleteExam } = useExamStore();
+  const { examsForAdmin, getAllExamForAdmin, createExam, deleteExam } =
+    useExamStore();
   const [isOpenCreateExam, setIsOpenCreateExam] = useState(false);
 
   useEffect(() => {
     const fetchExam = async () => {
-      await getAllExam();
+      await getAllExamForAdmin();
     };
 
     fetchExam();
-  });
+  }, [getAllExamForAdmin]);
 
   return (
     <div className="w-full h-full p-6 bg-gray-50 rounded-lg shadow">
@@ -68,7 +69,7 @@ const ExamManager = () => {
             </tr>
           </thead>
           <tbody>
-            {exams.map((e) => (
+            {examsForAdmin.map((e) => (
               <tr
                 key={e._id}
                 className="border-t hover:bg-gray-50 transition-colors"

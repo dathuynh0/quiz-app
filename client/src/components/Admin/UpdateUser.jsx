@@ -4,25 +4,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useUserStore } from "../../stores/useUserStore";
 
-const UpdateUser = ({ isOpen, isClose, user }) => {
-  const { updateUser } = useUserStore();
-  const [dataUpdate, setDataUpdate] = useState({
-    displayName: user.displayName,
-    avatarUrl: user.avatarUrl,
-  });
+const UpdateUser = ({ isOpen, isClose, data }) => {
+  const { updateUserForAdmin } = useUserStore();
+  const [dataUser, setDataUser] = useState(data);
+  console.log(dataUser);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setDataUpdate((prev) => ({
+    setDataUser((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
-
-  const handleSubmit = async () => {
-    const { displayName, avatarUrl } = dataUpdate;
-    await updateUser(user._id, displayName, avatarUrl);
   };
 
   return (
@@ -40,11 +32,12 @@ const UpdateUser = ({ isOpen, isClose, user }) => {
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
               zIndex: 1000,
             }}
           />
 
+          {/* main */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: -50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -59,37 +52,44 @@ const UpdateUser = ({ isOpen, isClose, user }) => {
               padding: "30px",
               borderRadius: "12px",
               zIndex: 1001,
-              minWidth: "450px",
+              width: "450px",
             }}
           >
-            <p>Họ và tên</p>
+            Họ và tên
             <Input
-              type="text"
+              value={dataUser.displayName}
+              onChange={handleChange}
               name="displayName"
-              value={dataUpdate.displayName}
-              onChange={handleChange}
             />
-            <p>Link ảnh đại diện</p>
+            Tên tài khoản
             <Input
-              type="text"
-              name="avatarUrl"
-              value={dataUpdate.avatarUrl}
+              value={dataUser.username}
               onChange={handleChange}
+              name="username"
             />
-            <div className="mt-4 flex justify-end items-center gap-2">
+            Quyền
+            <select
+              className="block border p-2 rounded-md cursor-pointer"
+              value={dataUser.position}
+              name="position"
+              onChange={handleChange}
+            >
+              <option value="Admin">Admin</option>
+              <option value="Teacher">Teacher</option>
+              <option value="Student">Student</option>
+            </select>
+            <div className="mt- 4 flex justify-end">
               <Button
-                variant="ghost"
-                onClick={isClose}
-                className="cursor-pointer"
-              >
-                Thoát
-              </Button>
-              <Button
-                onClick={() => {
-                  (handleSubmit(), isClose());
-                }}
                 variant="blue"
-                className="cursor-pointer"
+                onClick={async () => {
+                  await updateUserForAdmin(
+                    dataUser._id,
+                    dataUser.displayName,
+                    dataUser.username,
+                    dataUser.position,
+                  );
+                  isClose();
+                }}
               >
                 Xác nhận
               </Button>

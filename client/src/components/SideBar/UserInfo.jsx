@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useExamStore } from "@/stores/useExamStore";
 import { Button } from "@/components/ui/button";
-import { History, Pen, Plus } from "lucide-react";
+import { History, LayoutDashboard, Pen, Plus } from "lucide-react";
 import LineChart from "../Exam/LineChart";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
@@ -40,6 +40,14 @@ const UserInfo = () => {
           </div>
         </div>
         <div className="space-x-2 flex items-center">
+          {user.position === "Admin" && (
+            <Button variant="blue" className="cursor-pointer">
+              <Link className="flex items-center gap-1" to="/admin/dashboard">
+                <LayoutDashboard />
+                Trang quản trị
+              </Link>
+            </Button>
+          )}
           {user.position !== "Student" ? (
             <>
               <Button variant="blue" className="cursor-pointer">

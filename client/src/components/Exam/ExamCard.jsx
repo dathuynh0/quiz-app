@@ -16,7 +16,7 @@ const ExamCard = ({ exam }) => {
         }
         alt={exam.title}
       />
-      <div className="p-3 mt-4">
+      <div className="p-3">
         <h2 className="leading-snug line-clamp-2 h-15 text-xl font-medium">
           {exam.title}
         </h2>
