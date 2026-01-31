@@ -67,7 +67,7 @@ export const signIn = async (req, res) => {
     const accessToken = jwt.sign(
       { userId: user._id },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "10m" },
+      { expiresIn: "1d" },
     );
 
     const refreshToken = crypto.randomBytes(64).toString("hex");
@@ -137,7 +137,7 @@ export const refresh = async (req, res) => {
     const accessToken = jwt.sign(
       { userId: existToken.userId },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "10m" },
+      { expiresIn: "1d" },
     );
 
     return res.status(201).json({ accessToken });

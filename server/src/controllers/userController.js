@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
 
 export const getUser = async (req, res) => {
   try {
@@ -24,7 +25,7 @@ export const getAllUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { username, password, displayName, avatarUrl, position } = req.body;
+    const { username, password, displayName, position } = req.body;
     if (!username || !password || !displayName || !position) {
       return res.status(400).json({
         message:
@@ -47,13 +48,37 @@ export const createUser = async (req, res) => {
       username,
       password: hashedPassword,
       displayName,
-      avatarUrl,
       position,
     });
 
     return res.sendStatus(204);
   } catch (error) {
     console.error("Lỗi khi gọi hàm creteUser: ", error);
+    return res.status(500).json({ message: "Lỗi server" });
+  }
+};
+
+export const updateRoleUser = async (req, res) => {
+  try {
+    const { displayName, avatarUrl, position } = req.body;
+
+    const newUser = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        displayName,
+        avatarUrl,
+        position,
+      },
+      { new: true },
+    );
+
+    if (!newUser) {
+      return res.status(400).json({ message: "Cập nhật quyền user thất bại" });
+    }
+
+    return res.status(200).json(newUser);
+  } catch (error) {
+    console.error("Lỗi khi gọi hàm updateRoleUser: ", error);
     return res.status(500).json({ message: "Lỗi server" });
   }
 };
