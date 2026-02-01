@@ -42,7 +42,7 @@ const UserInfo = () => {
         <div className="space-x-2 flex items-center">
           {user.position === "Admin" && (
             <Button variant="blue" className="cursor-pointer">
-              <Link className="flex items-center gap-1" to="/admin/dashboard">
+              <Link className="flex items-center gap-1" to="/admin/category">
                 <LayoutDashboard />
                 Trang quản trị
               </Link>

@@ -14,11 +14,6 @@ const NavigationAdmin = () => {
 
   const data = [
     {
-      name: "Dashboard",
-      link: "/admin/dashboard",
-      icon: <LayoutDashboard />,
-    },
-    {
       name: "Quản lý danh mục",
       link: "/admin/category",
       icon: <ChartColumnStacked />,
